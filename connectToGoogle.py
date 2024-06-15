@@ -1,1 +1,2 @@
-def connectToGoogle
+def connectToGoogle():
+    pass
