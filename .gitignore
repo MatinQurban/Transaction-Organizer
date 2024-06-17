@@ -3,6 +3,12 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/main/VisualStudio.gitignore
 
+# API jsons
+client_secret.json
+token.json
+token1.json
+
+
 # User-specific files
 *.rsuser
 *.suo
