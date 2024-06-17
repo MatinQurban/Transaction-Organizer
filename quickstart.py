@@ -50,7 +50,7 @@ def main():
     resultsMessage = user.messages()
     messages = resultsMessage.list(userId="me", maxResults=3).execute().get("messages", [])
 
-    msg_raw = resultsMessage.get(userId="me", id=messages[0]["id"], format='raw').execute()['raw']
+    msg_raw = resultsMessage.get(userId="me", id=messages[1]["id"], format='raw').execute()['raw']
     decoded_msg = base64.urlsafe_b64decode(msg_raw).decode('utf-8')
     
     boundary = decoded_msg.split("boundary=\"")[1]
