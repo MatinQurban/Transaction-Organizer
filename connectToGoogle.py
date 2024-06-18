@@ -38,12 +38,8 @@ def connectToGoogle(token_path: str, credentials_path: str, SCOPES: list):
         with open(token_path, "w") as token:
             token.write(creds.to_json())
 
-    try:
-        # Call the Gmail API
-        service = build("gmail", "v1", credentials=creds)
-
-    except HttpError as error:
-        # TODO(developer) - Handle errors from gmail API.
-        print(f"An error occurred: {error}")
+  
+    # Call the Gmail API
+    service = build("gmail", "v1", credentials=creds)
 
     return service
