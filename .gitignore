@@ -4,9 +4,7 @@
 ## Get latest from https://github.com/github/gitignore/blob/main/VisualStudio.gitignore
 
 # API jsons
-client_secret.json
-token.json
-token1.json
+*.json
 
 
 # User-specific files
