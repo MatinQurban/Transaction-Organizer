@@ -1,0 +1,13 @@
+- [x] connectToGoogle.py
+- [x] getEmails.py
+- [x] strip emails function
+- [x] decode emails function
+- [x] search emails for "Order #", potentially before text processing?
+    - [x] inside getEmails, only append to results list if it contains 'order'
+- [x] remove links from message text. so the msg is shorter
+- [] store emails
+    - [] get data from email
+        - [] Total
+        - [] Order Number / Order #
+        - [] seller/vendor (?)
+- [] be able to search storage of emails for a certain order (query: name/order#/date/company/item/etc)
