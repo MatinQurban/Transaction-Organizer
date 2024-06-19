@@ -7,10 +7,17 @@ def getEmails(user):
     Returns:
     messages: list - the list of messages for the user
     '''
+    results = []
     messages = user.messages()
     print("User profile: ")
     print(user.getProfile(userId="me").execute())
     
     message_list = messages.list(userId="me").execute().get("messages", [])
 
-    return message_list
+    for message in message_list:
+        subject = user.messages().get(userId="me", id=message["id"], format='full').execute()['payload']['headers'][-3]['value']
+        if "ORDER" in subject.upper():
+            results.append(message)
+
+
+    return results
