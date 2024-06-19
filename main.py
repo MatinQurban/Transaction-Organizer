@@ -1,4 +1,4 @@
-import base64
+import re
 
 from connectToGoogle import connectToGoogle
 from getEmails import getEmails
@@ -20,9 +20,12 @@ def main():
     user = service.users()
     
     messages = getEmails(user)
+    print(len(messages))
 
     raw_emails = getRawText(user, messages)
-    #print("Raw emails: ", raw_emails[0])
+    text = re.sub(r'https?:\/\/.*?>', 'LINK>', raw_emails[0], flags=re.DOTALL) #\/\/.*[\r\n]* # ?(?=>) # r'https?:\/\/.*?>'
+
+    print("Raw emails: ", text)
 
   except HttpError as error:
     # TODO(developer) - Handle errors from gmail API.
