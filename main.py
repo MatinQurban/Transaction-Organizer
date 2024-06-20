@@ -1,4 +1,4 @@
-
+import csv
 
 from connectToGoogle import connectToGoogle
 from parseEmail import parseEmail

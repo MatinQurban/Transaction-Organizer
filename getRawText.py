@@ -3,7 +3,6 @@ import re
 
 
 def getRawText(user, messages: list):
-    
     raw_emails = []
     for message in messages:
         msg_raw = user.messages().get(userId="me", id=message["id"], format='raw').execute()['raw']
@@ -15,8 +14,8 @@ def getRawText(user, messages: list):
         parsed_msg = decoded_msg.split(boundary)[2]
         #print("Message decoded: ", parsed_msg) #['payload']['parts']
         parsed_msg = re.sub(r'https?:\/\/.*?>', 'LINK>', parsed_msg, flags=re.DOTALL) #\/\/.*[\r\n]* # ?(?=>) # r'https?:\/\/.*?>'
-        
-        raw_emails.append(parsed_msg)
+        email_obj = {'id': message['id'], 'text': parsed_msg}
+        raw_emails.append(email_obj)
    
     return raw_emails
     
