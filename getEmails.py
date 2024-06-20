@@ -15,9 +15,12 @@ def getEmails(user):
     message_list = messages.list(userId="me").execute().get("messages", [])
 
     for message in message_list:
-        subject = user.messages().get(userId="me", id=message["id"], format='full').execute()['payload']['headers'][-3]['value']
-        if "ORDER" in subject.upper():
+        subject = user.messages().get(userId="me", id=message["id"], format='full').execute()['payload']['headers']
+        subject = [item['value'] for item in subject if item['name'] == 'Subject']
+        print("Subject: ", subject)
+        if "ORDER" in subject[0].upper():
             results.append(message)
+            print("Appending")
 
 
     return results

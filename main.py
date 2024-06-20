@@ -17,18 +17,22 @@ def main():
   """
   try:
     # Call the Gmail API
-    service = connectToGoogle("token1.json", "credentials.json", SCOPES)
+    service = connectToGoogle("token.json", "credentials.json", SCOPES)
     user = service.users()
     
     messages = getEmails(user)
+    # for item in header:
+    #     if item['name'] == 'Date':
+    #        date = item['value']
     print(len(messages))
 
     raw_emails = getRawText(user, messages)
     
 
-    #print("Raw emails: ", text)
+    #print("Raw emails: ", raw_emails[0])
 
-    parseEmail
+    #parseEmail(raw_emails[0])
+
   except HttpError as error:
     # TODO(developer) - Handle errors from gmail API.
     print(f"An error occurred: {error}")
