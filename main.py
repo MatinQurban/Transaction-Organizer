@@ -1,6 +1,7 @@
-import re
+
 
 from connectToGoogle import connectToGoogle
+from parseEmail import parseEmail
 from getEmails import getEmails
 from getRawText import getRawText
 from googleapiclient.errors import HttpError
@@ -23,10 +24,11 @@ def main():
     print(len(messages))
 
     raw_emails = getRawText(user, messages)
-    text = re.sub(r'https?:\/\/.*?>', 'LINK>', raw_emails[0], flags=re.DOTALL) #\/\/.*[\r\n]* # ?(?=>) # r'https?:\/\/.*?>'
+    
 
-    print("Raw emails: ", text)
+    #print("Raw emails: ", text)
 
+    parseEmail
   except HttpError as error:
     # TODO(developer) - Handle errors from gmail API.
     print(f"An error occurred: {error}")

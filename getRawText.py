@@ -1,4 +1,5 @@
 import base64
+import re
 
 
 def getRawText(user, messages: list):
@@ -13,6 +14,7 @@ def getRawText(user, messages: list):
         #print("Boundary: ", boundary)
         parsed_msg = decoded_msg.split(boundary)[2]
         #print("Message decoded: ", parsed_msg) #['payload']['parts']
+        parsed_msg = re.sub(r'https?:\/\/.*?>', 'LINK>', parsed_msg, flags=re.DOTALL) #\/\/.*[\r\n]* # ?(?=>) # r'https?:\/\/.*?>'
         
         raw_emails.append(parsed_msg)
    
