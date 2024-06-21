@@ -17,20 +17,16 @@ def main():
   """
   try:
     # Call the Gmail API
-    service = connectToGoogle("token.json", "credentials.json", SCOPES)
-    user = service.users()
-    
-    messages = getEmails(user)
-    # for item in header:
-    #     if item['name'] == 'Date':
-    #        date = item['value']
-    print(len(messages))
-    
-    # seller = user.messages().get(userId="me", id=messages[0]['id'], format='full').execute()['payload']['headers']
-    # print(seller)
+    # cred_file = "credentials.json"
+    # token_file = "token.json"
+    # service = connectToGoogle(token_file, cred_file, SCOPES)
 
-    raw_emails = getRawText(user, messages)
 
+    # user = service.users()
+    
+    # messages = getEmails(user)
+
+    # raw_emails = getRawText(user, messages)
 
     # with open('emails.csv', mode='w') as email_file:
     #     email_writer = csv.DictWriter(email_file, fieldnames=['id', 'text'])
@@ -38,25 +34,26 @@ def main():
     #     email_writer.writerows(raw_emails)
 
     # TODO Create a function called getAndSaveEmails that will get the emails and save them to a csv file 
-    # print("Raw emails: ", raw_emails[0])
-
-    # print(raw_emails[15]['id'])
-    # print(messages[15])
-
-
 
     email_information = []
-    for i in range(len(raw_emails)):
-      info = parseEmail(raw_emails[i]['text'], messages[i]['id'], user)
-      if info == -1:
-        print("Error parsing email")
-        print(messages[i])
-      else:
-        email_information.append(info)
-    with open('email_info.csv', mode='w') as email_info_file:
-        email_info_writer = csv.DictWriter(email_info_file, fieldnames=['Date', 'Seller', 'OrderNum', 'Total', 'EmailId'])
-        email_info_writer.writeheader()
-        email_info_writer.writerows(email_information)
+
+    # for i in range(len(raw_emails)):
+    #   info = parseEmail(raw_emails[i]['text'], messages[i]['id'], user)
+    #   if info == -1:
+    #     print("ID check: ")
+    #     print(messages[i])
+    #   else:
+    #     email_information.append(info)
+    # with open('email_info.csv', mode='w') as email_info_file:
+    #     email_info_writer = csv.DictWriter(email_info_file, fieldnames=['Date', 'Seller', 'OrderNum', 'Total', 'EmailId'])
+    #     email_info_writer.writeheader()
+    #     email_info_writer.writerows(email_information)
+
+    # Read data from the file
+    with open("email_info.csv", 'r') as file:
+      reader = csv.DictReader(file)
+      data = [row for row in reader]
+
 
   
   except HttpError as error:
