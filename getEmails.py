@@ -11,16 +11,22 @@ def getEmails(user):
     messages = user.messages()
     print("User profile: ")
     print(user.getProfile(userId="me").execute())
-    
-    message_list = messages.list(userId="me").execute().get("messages", [])
+
+    search_query = "in:inbox -category:(promotions OR social) subject:Order"
+    message_list = messages.list(userId="me", q=search_query).execute().get("messages", [])
 
     for message in message_list:
-        subject = user.messages().get(userId="me", id=message["id"], format='full').execute()['payload']['headers']
-        subject = [item['value'] for item in subject if item['name'] == 'Subject']
-        print("Subject: ", subject)
+        headers = user.messages().get(userId="me", id=message["id"], format='full').execute()['payload']['headers']
+        subject = [item['value'] for item in headers if item['name'] == 'Subject']
+        [sender] = [item['value'] for item in headers if item['name'] == 'From']
+        content_type = [item['value'] for item in headers if item['name'] == 'Content-Type']
+        print("Content type: ", content_type)
+        if "McDonald\'s" in sender:
+            continue
+        # print("Subject: ", subject)
         if "ORDER" in subject[0].upper():
             results.append(message)
-            print("Appending")
+            # print("Appending")
 
 
     return results

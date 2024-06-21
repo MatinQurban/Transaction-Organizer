@@ -25,13 +25,26 @@ def main():
     #     if item['name'] == 'Date':
     #        date = item['value']
     print(len(messages))
+    
+    # seller = user.messages().get(userId="me", id=messages[0]['id'], format='full').execute()['payload']['headers']
+    # print(seller)
 
     raw_emails = getRawText(user, messages)
     
 
+    # with open('emails.csv', mode='w') as email_file:
+    #     email_writer = csv.DictWriter(email_file, fieldnames=['id', 'text'])
+    #     email_writer.writeheader()
+    #     email_writer.writerows(raw_emails)
+
     #print("Raw emails: ", raw_emails[0])
 
-    #parseEmail(raw_emails[0])
+    for email in raw_emails:
+      if email['id'] == '18d81ca9f1bc2cfa':
+        print(email['text'])
+
+
+    parseEmail(raw_emails[15]['text'], messages[15]['id'], user)
 
   except HttpError as error:
     # TODO(developer) - Handle errors from gmail API.

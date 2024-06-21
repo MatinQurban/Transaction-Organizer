@@ -6,11 +6,12 @@
     - [x] inside getEmails, only append to results list if it contains 'order'
 - [x] remove links from message text. so the msg is shorter
 - [] store emails
-    - [] choose type of file
+    - [] raw emails
+    - [x] choose type of file (im doing csv)
     - [] choose files
-    - [] get data from email
-        - [x] Total
-        - [x] Order Number / Order #
-        - [] seller/vendor (?)
-        - [] date
+- [] get data from email
+    - [x] Total
+    - [x] Order Number / Order #
+    - [] seller/vendor (?)
+    - [x] date
 - [] be able to search storage of emails for a certain order (query: name/order#/date/company/item/etc)
