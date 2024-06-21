@@ -5,13 +5,20 @@
 - [x] search emails for "Order #", potentially before text processing?
     - [x] inside getEmails, only append to results list if it contains 'order'
 - [x] remove links from message text. so the msg is shorter
-- [] store emails
-    - [] raw emails
+- [x] store emails
+    - [x] raw emails
     - [x] choose type of file (im doing csv)
-    - [] choose files
-- [] get data from email
+    - [x] choose files
+- [x] get data from email
     - [x] Total
     - [x] Order Number / Order #
-    - [] seller/vendor (?)
+    - [x] seller/vendor (?)
     - [x] date
+
 - [] be able to search storage of emails for a certain order (query: name/order#/date/company/item/etc)
+    - [] unpack data from csv
+    - [] create a interaction/menu loop (choose 1 for x, 2 for y, ... , -1 to exit)
+    - [] take user input
+        - [] menu item
+        - [] search query
+    - [] match search query with email_info and pull corresponding data
