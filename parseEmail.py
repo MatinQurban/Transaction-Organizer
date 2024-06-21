@@ -1,4 +1,5 @@
 import re
+from ast import literal_eval
 
 def parseEmail(raw_email: str, email_id: str, user):
     '''
@@ -15,6 +16,8 @@ def parseEmail(raw_email: str, email_id: str, user):
         total = re.split(r'(?<=\\.)TOTAL', raw_email)
         if len(total) == 1:
             total = re.split(r"\b" + re.escape("TOTAL") + r"\b", raw_email)
+        if len(total) == 1:
+            total = raw_email.split("TOTAL")
         total = total[1].split("$")
         # print("Total: ", total[1])
         total = total[1].split('.')
@@ -26,33 +29,33 @@ def parseEmail(raw_email: str, email_id: str, user):
 
     # Find the order number
     if "ORDER NUMBER" in raw_email:
-        print("Order number found")
+        # print("Order number found")
         order_num = raw_email.split("ORDER NUMBER") #re.split(r"\b" + re.escape("ORDER") + r"\b", raw_email)
     elif "ORDER ID" in raw_email:
-        print("Order ID found")
+        # print("Order ID found")
         order_num = raw_email.split("ORDER ID")
     elif "ORDER NUM" in raw_email:
-        print("Order num found")
+        # print("Order num found")
         order_num = raw_email.split("ORDER NUM")
     elif "ORDER #" in raw_email:
-        print("Order # found")
+        # print("Order # found")
         order_num = raw_email.split("ORDER #")
     elif "ORDER#" in raw_email:
-        print("Order# found")
+        # print("Order# found")
         order_num = raw_email.split("ORDER#")
     elif "ORDER NO" in raw_email:
-        print("Order no. found")
+        # print("Order no. found")
         order_num = raw_email.split("ORDER NO")
     else:
-        print("Error finding order number")
+        # print("Error finding order number")
         return -1
 
-    print(order_num[1])
+    # print(order_num[1])
     order_num = re.sub(r'<[^>]*>', '', order_num[1])
-    order_num = order_num.split(" ")[0]
-    order_num = re.search(r'(?<![\\/<>])(?<=\s)[a-zA-Z0-9#][a-zA-Z0-9-]*', order_num)
+    # print(order_num)
+    order_num = re.search(r'(?<![\\/<>])[a-zA-Z0-9#][a-zA-Z0-9-]*', order_num) #re.search(r'(^|(?:(?<![\\/<>])(?<=\s)))[a-zA-Z0-9#][a-zA-Z0-9-]*', literal_eval(repr(order_num)))
     order_num = order_num.group(0)
-    print(order_num)
+    # print(order_num)
 
 
     # Find the date

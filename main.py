@@ -43,25 +43,25 @@ def main():
     # print(raw_emails[15]['id'])
     # print(messages[15])
 
-    trouble_id = '18cf5a876e9a6f6e'
-    for message in raw_emails:
-      if message['id'] == trouble_id:
-        parseEmail(message['text'], trouble_id, user)
-        break
+    # trouble_id = '18d81ca9f1bc2cfa'
+    # for message in raw_emails:
+    #   if message['id'] == trouble_id:
+    #     parseEmail(message['text'], trouble_id, user)
+    #     break
 
 
-    # email_information = []
-    # for i in range(len(raw_emails)):
-    #   info = parseEmail(raw_emails[i]['text'], messages[i]['id'], user)
-    #   if info == -1:
-    #     print("Error parsing email")
-    #     print(messages[i])
-    #   else:
-    #     email_information.append(info)
-    # with open('email_info.csv', mode='w') as email_info_file:
-    #     email_info_writer = csv.DictWriter(email_info_file, fieldnames=['Date', 'Seller', 'OrderNum', 'Total', 'EmailId'])
-    #     email_info_writer.writeheader()
-    #     email_info_writer.writerows(email_information)
+    email_information = []
+    for i in range(len(raw_emails)):
+      info = parseEmail(raw_emails[i]['text'], messages[i]['id'], user)
+      if info == -1:
+        print("Error parsing email")
+        print(messages[i])
+      else:
+        email_information.append(info)
+    with open('email_info.csv', mode='w') as email_info_file:
+        email_info_writer = csv.DictWriter(email_info_file, fieldnames=['Date', 'Seller', 'OrderNum', 'Total', 'EmailId'])
+        email_info_writer.writeheader()
+        email_info_writer.writerows(email_information)
 
   
   except HttpError as error:
