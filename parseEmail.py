@@ -1,42 +1,45 @@
 import re
-from bs4 import BeautifulSoup
 
 def parseEmail(raw_email: str, email_id: str, user):
     '''
     This function will parse raw text of an email and return a dictionary with the following
-    keys: 'Date', 'Seller', 'OrderNum', 'Total'.
+    keys: 'Date', 'Seller', 'OrderNum', 'Total', 'EmailId'.
     '''
     raw_email = raw_email.upper()
     headers = user.messages().get(userId="me", id=email_id, format='full').execute()['payload']['headers']
+    email_info = {}
 
-    for header in headers:
-        if header['name'] == 'Content-Type':
-            if header['value'] == 'text/html; charset="UTF-8"':
-                soup = BeautifulSoup(raw_email, 'html.parser')
-                raw_email = soup.get_text
-            break
+    
     # Find the total by splitting the raw email by "TOTAL"
     try:
-        total = re.split(r"\b" + re.escape("TOTAL") + r"\b", raw_email)
+        total = re.split(r'(?<=\\.)TOTAL', raw_email)
+        if len(total) == 1:
+            total = re.split(r"\b" + re.escape("TOTAL") + r"\b", raw_email)
         total = total[1].split("$")
         # print("Total: ", total[1])
         total = total[1].split('.')
         total = total[0] + '.' + total[1][0:2]
-        print(total)
+        # print(total)
     except IndexError:
-        print("Error finding total")
+        # print("Error finding total")
         total = -1
 
     # Find the order number
     if "ORDER NUMBER" in raw_email:
         print("Order number found")
         order_num = raw_email.split("ORDER NUMBER") #re.split(r"\b" + re.escape("ORDER") + r"\b", raw_email)
+    elif "ORDER ID" in raw_email:
+        print("Order ID found")
+        order_num = raw_email.split("ORDER ID")
     elif "ORDER NUM" in raw_email:
         print("Order num found")
         order_num = raw_email.split("ORDER NUM")
     elif "ORDER #" in raw_email:
         print("Order # found")
         order_num = raw_email.split("ORDER #")
+    elif "ORDER#" in raw_email:
+        print("Order# found")
+        order_num = raw_email.split("ORDER#")
     elif "ORDER NO" in raw_email:
         print("Order no. found")
         order_num = raw_email.split("ORDER NO")
@@ -44,15 +47,17 @@ def parseEmail(raw_email: str, email_id: str, user):
         print("Error finding order number")
         return -1
 
-    # print(order_num[1])
-    order_num = re.search(r'(?<!\\)[a-zA-Z0-9#][a-zA-Z0-9-]*', order_num[1])
+    print(order_num[1])
+    order_num = re.sub(r'<[^>]*>', '', order_num[1])
+    order_num = order_num.split(" ")[0]
+    order_num = re.search(r'(?<![\\/<>])(?<=\s)[a-zA-Z0-9#][a-zA-Z0-9-]*', order_num)
     order_num = order_num.group(0)
     print(order_num)
 
 
     # Find the date
     date = headers[1]['value'].split(";")[-1].strip()
-    print(date)
+    # print(date)
 
     # Find the seller
     if "FORWARDED MESSAGE" in raw_email:
@@ -63,7 +68,8 @@ def parseEmail(raw_email: str, email_id: str, user):
                 seller = header['value']
                 break
 
-    print(seller)
+    # print(seller)
 
+    email_info = {'Date': date, 'Seller': seller, 'OrderNum': order_num, 'Total': total, 'EmailId': email_id}
 
-    pass
+    return email_info

@@ -18,11 +18,6 @@ def getEmails(user):
     for message in message_list:
         headers = user.messages().get(userId="me", id=message["id"], format='full').execute()['payload']['headers']
         subject = [item['value'] for item in headers if item['name'] == 'Subject']
-        [sender] = [item['value'] for item in headers if item['name'] == 'From']
-        content_type = [item['value'] for item in headers if item['name'] == 'Content-Type']
-        print("Content type: ", content_type)
-        if "McDonald\'s" in sender:
-            continue
         # print("Subject: ", subject)
         if "ORDER" in subject[0].upper():
             results.append(message)
