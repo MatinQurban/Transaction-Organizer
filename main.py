@@ -43,11 +43,6 @@ def main():
     # print(raw_emails[15]['id'])
     # print(messages[15])
 
-    # trouble_id = '18d81ca9f1bc2cfa'
-    # for message in raw_emails:
-    #   if message['id'] == trouble_id:
-    #     parseEmail(message['text'], trouble_id, user)
-    #     break
 
 
     email_information = []
