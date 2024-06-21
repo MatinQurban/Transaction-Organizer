@@ -64,7 +64,9 @@ def parseEmail(raw_email: str, email_id: str, user):
 
     # Find the seller
     if "FORWARDED MESSAGE" in raw_email:
-        seller = raw_email.split("FROM:")[1].split("\n")[0].strip()
+        seller = raw_email.split("FROM:")[1]
+        seller = re.search(r'.*?>', seller)
+        seller = seller.group(0)
     else:
         for header in headers:
             if header['name'] == 'From':
