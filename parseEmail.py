@@ -1,5 +1,5 @@
 import re
-from ast import literal_eval
+#from ast import literal_eval
 
 def parseEmail(raw_email: str, email_id: str, user):
     '''
@@ -70,8 +70,8 @@ def parseEmail(raw_email: str, email_id: str, user):
             if header['name'] == 'From':
                 seller = header['value']
                 break
-
     # print(seller)
+
 
     email_info = {'Date': date, 'Seller': seller, 'OrderNum': order_num, 'Total': total, 'EmailId': email_id}
 
